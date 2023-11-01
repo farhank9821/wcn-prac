@@ -1,0 +1,360 @@
+1. Digital clock 
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIGITAL CLOCK</title>
+  </head>
+  <body>
+    <div id="clock" onload="currentTime()"></div>
+    <script>
+      function currentTime() {
+        let date = new Date();
+        let hh = date.getHours();
+        let mm = date.getMinutes();
+        let ss = date.getSeconds();
+
+        let session = "AM";
+        if (hh > 12) {
+          session = "PM";
+        }
+
+        hh = hh < 10 ? "0" + hh : hh;
+        mm = mm < 10 ? "0" + mm : mm;
+        ss = ss < 10 ? "0" + ss : ss;
+
+        let time = hh + ":" + mm + ":" + ss + session;
+
+        document.getElementById("clock").innerText = time;
+        let t = setTimeout(function () {
+          currentTime();
+        }, 1000);
+      }
+      currentTime();
+    </script>
+  </body>
+</html>
+
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+2.Write a JS To change background color of the web page automatically after every 5 seconds.
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Change background color in every 5 seconds</title>
+  </head>
+  <body>
+    <h1>Change the background in every 5 seconds</h1>
+    <script>
+      setInterval(function () {
+        var randomColor = Math.floor(Math.random()*16777215).toString(16);
+        document.body.style.backgroundColor = "#"+randomColor;
+      }, 5000);
+    </script>
+  </body>
+</html>
+
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+3. Write a JS to display three radio buttons on the web page , namely, “Red”, “Blue” and “Green”. Selection any button changes the background color as per the name of the button.
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>toggle background color</title>
+    <script>
+        function changeBodyBg(color){
+            document.body.style.background = color;
+        }
+        function changeHeadingBg(color){
+            document.getElementById("heading").style.background = color;
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <label >Change web page label to</label>
+        <input type="radio" onclick="changeBodyBg('red');"> Red </button>
+        <input type="radio" onclick="changeBodyBg('blue');"> Blue </button>
+        <input type="radio" onclick="changeBodyBg('green');"> Green </button>
+    </div>
+</body>
+</html>
+
+
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+4. Write a JavaScript code to set a cookie on the user's computer
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function writeCookie() {
+            if (document.myForm.customer.value == "") {
+                alert("Enter some value.");
+                return;
+            }
+
+            var cookieValue = escape(document.myForm.customer.value) + ";";
+            document.cookie = "name=" + cookieValue;
+            document.write("Setting Cookie: name=" + cookieValue);
+        }
+    </script>
+</head>
+<body>
+    <form name="myForm" action="">
+        Enter name: <input type="text" name="customer">
+        <input type="button" value="Set Cookie" onclick="writeCookie();">
+    </form>
+</body>
+</html>
+
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+5. Write a JavaScript to validate Username ,Password and Email. Username and Password should not blank and minimum length of password=8. Email should have @character.
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User validation</title>
+    <script>
+        function validation() {
+            var username = document.getElementById("username").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            if (username === "") {
+                alert('Username cannot be blank');
+                return false;
+            }
+            if (password === "" || password.length < 8) {
+                alert('Password must not be empty or less than 8 characters');
+                return false;
+            }
+            if (!email.includes("@")) {
+                alert('Invalid email address');
+                return false;
+            }
+            alert('Form validated');
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <form onsubmit="return validation()">
+        Username: <input type="text" name="username" id="username"><br>
+        Password: <input type="password" name="password" id="password"><br>
+        Email: <input type="email" name="email" id="email"><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+6. Write a Node JS to demonstrate Call back and Asynchronous function
+
+
+function asynchronous(callback){
+    setTimeout(function(){
+      var result = Math.random();
+      callback(null, result);
+    }, 2000);
+}
+
+function abc(err, result){
+    if(err){
+        console.log('Error : ', err);
+    }
+    else{
+        console.log('result : ', result);
+    }
+}
+
+console.log('start program');
+asynchronous(abc);
+console.log('end');
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+7. Design HTTP server using Node JS which log client request in log.txt.
+
+Make a log.txt file, keep it empty
+Now make a js file, server.js
+
+server.js
+
+const http = require('http');
+const fs = require('fs');
+
+const server = http.createServer((req, res) => {
+    // Log the client request
+    const logMessage = `${new Date().toISOString()} - Request: ${req.method} ${req.url}\n`;
+    fs.appendFile('log.txt', logMessage, (err) => {
+        if (err) {
+            console.error('Error writing to log.txt:', err);
+        }
+    });
+
+    // Respond to the client
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello, this request has been logged!\n');
+});
+
+const port = 8080;
+server.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}/`);
+});
+
+Now in your terminal run the command "node server.js"
+It'll direct your to localhost 8080
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+8. Write a React code to create a button “Greet the User” and display an alert box saying “Hello!” on clicking that button
+
+For creating a react app : in your terminal,
+For checking the versions of node and react
+npm -v
+node -v
+For creating the app:
+npx create-react-app my-app
+cd my-app
+npm start
+once done:
+npm run build
+
+
+Create a react app, and in App.js 
+Copy this 
+
+import React from 'react';
+
+function App(){
+  return (
+    <div>
+      <button  onClick= {() => alert("Greetings")}>
+        Greet the User
+      </button>
+    </div>
+  );
+}
+export default App;
+
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+9. Write a code making use of React Hooks that displays four buttons namely, “Red”, “Blue”, “Green”, “Yellow”. On clicking any of these buttons, the code displays the message that you have selected that particular color.
+
+
+For creating a react app : in your terminal,
+For checking the versions of node and react
+npm -v
+node -v
+For creating the app:
+npx create-react-app my-app
+cd my-app
+npm start
+once done:
+npm run build
+
+
+Create a react app, and in App.js 
+Copy this
+
+import React, { useState } from 'react';
+
+function App() {
+  const [selectedColor, setSelectedColor] = useState('');
+
+  const handleColorClick = (color) => {
+    setSelectedColor(`You have selected ${color} color.`);
+  };
+
+  return (
+    <div className="App">
+      <h2>{selectedColor}</h2>
+      <button onClick={() => handleColorClick('Red')}>Red</button>
+      <button onClick={() => handleColorClick('Blue')}>Blue</button>
+      <button onClick={() => handleColorClick('Green')}>Green</button>
+      <button onClick={() => handleColorClick('Yellow')}>Yellow</button>
+    </div>
+  );
+}
+
+export default App;
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+1. Dhcp steps 
+
+1. Take 1 router, 2 switches, 4 laptops,  router at top, followed by 2 switches below them, then 4 laptops (like a tree)
+2. Then go to Connections and take copper wire and connect them with each other
+3. Click on router, then go to cli, it’ll ask (would u like to enter initial configuration ?) select n, Press enter 
+4. Now (Router>  ) would be written, type “en” and press enter.
+5. Then type “conf t”  and press enter.
+6. Type “int fa0/0” and press enter.
+7. Then type “ip address 192.168.0.1  255.255.255.0” and press enter.
+8. Then type “no shutdown” and press enter.
+9. Then type “do write memory” to save the changes made and press enter.
+10. Now type “ip dhcp pool net1” and press enter.
+11. Now type “network 192.168.0.1  255.255.255.0” and press enter.
+12. Now type “exit” and press enter.
+13. Now repeat from step 6 to 11 (just change fa0/0 to fa0/1 && ip dhcp pool net1 to ip dhcp pool net2 && 192.168.0.1  255.255.255.0 to 192.168.1.1  255.255.255.0 )
+14. Now click on laptop, go to desktop , select ip configuration, click on dhcp (it’ll auto generate the ip address)
+15. Done
+
+
+2. vlan 
+
+1. Take 1 switch of type 2960, and 4 laptops 
+2. then go to indivisual laptops, click on it and go to desktop tab and click on IP Configuration of it and type 10.0.0.1 in the IPv4 Address and similiarly for all the 4 laptops as 10.0.0.2,10.0.0.3,10.0.0.4 and close the tabs.
+3. Now, click on the switch and go to the CLI. 
+4. press enter 
+5. it shows as switch>
+6. Write enable 
+7. Then type conf t 
+8. then type vlan 2
+9. name office
+10. exit 
+11. repeat the same with vlan 3, and name home
+12. exit
+13. interface fastEthernet 0/1
+14. switchport access vlan 2
+15. exit
+Repeat the same fro 0/2
+16. interface fastEthernet 0/3
+17. switchport access vlan 3
+18. exit 
+
+and now to verify it!!!
+go to pc 1
+go to desktop tab and command prompt 
+ping 10.0.0.2
+it will return the packets
+ping 10.0.0.3
+request will be timed out. 
